@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Photo from './Photo';
+import ErrorBoundary from './ErrorBoundary';
 
 interface PhotoData {
     id: string;
@@ -7,9 +8,9 @@ interface PhotoData {
         small: string;
     };
     alt_description: string;
-}
+} 
 
-const PhotoContainer = ({url, alt}) => {
+const PhotoContainer = () => {
     const [ photoData, setPhotoData ] = useState<PhotoData[]>([]);
 
     useEffect(() => {
@@ -39,4 +40,12 @@ const PhotoContainer = ({url, alt}) => {
       );
 }
 
-export default PhotoContainer;
+function PhotoContainerErrorBoundary() {
+    return (
+      <ErrorBoundary>
+        <PhotoContainer />
+      </ErrorBoundary>
+    );
+  }
+
+export default PhotoContainerErrorBoundary;
