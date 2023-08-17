@@ -1,5 +1,5 @@
 import './App.css';
-import PhotoContainer from './PhotoContainer';
+import PhotoContainer from './PhotoContainer.tsx';
 
 function App() {
 

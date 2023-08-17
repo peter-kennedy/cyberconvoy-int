@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react';
 import Photo from './Photo';
 
+interface PhotoData {
+    id: string;
+    urls: {
+        small: string;
+    };
+    alt_description: string;
+}
+
 const PhotoContainer = ({url, alt}) => {
-    const [ photoData, setPhotoData ] = useState([]);
+    const [ photoData, setPhotoData ] = useState<PhotoData[]>([]);
 
     useEffect(() => {
         fetchPhotos();
       }, [])
 
-    const fetchPhotos = async () => {
+    const fetchPhotos = async (): Promise<void> => {
         try {
-            const data = await fetch(`https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_UPSPLASH_SECRET}`);
-            const photoDataRes = await data.json(); 
-            setPhotoData(photoDataRes);   
+            const response = await fetch(`https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_UPSPLASH_SECRET}`);
+            const photos: PhotoData[] = await response.json(); 
+            setPhotoData(photos);   
         } catch(err) {
             console.error(`Error fetching photos: ${err}`)
         }
